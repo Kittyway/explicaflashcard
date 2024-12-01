@@ -1,0 +1,160 @@
+/*criamos cor em variaveis, para facilitar no codigo e evitar bagunça.*/
+:root {
+    --text-color: #DBE4EF;
+    --card-front-color: #144480;
+    --card-back-color: #00F4BF;
+}
+
+body {
+    background: url(bg-desktop.webp);
+    font-family: Bai Jamjuree;
+}
+
+/*para chamar a div, usamos a #.
+o wrap significa quebra de linha.
+justificar o conteudo, deixando todo eles com o msm espaço.
+o padd deu espaço na tela, p eles ficar mais no meio.
+o gap deu espaçamento entre os elementos, entre cada cartao*/
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 4rem;
+    gap: 3rem;
+}
+
+
+/*no flex vai tentar deixar os espaçamentos iguais.
+flex-basis: Define o tamanho inicial de um item antes de qualquer distribuição do espaço restante em um container flexível. Ou seja, é o tamanho que o item terá antes de ajustes baseados no espaço disponível.
+
+calc(33% - 6rem): O calc() permite fazer cálculos com diferentes unidades de medida. Nesse caso:
+
+33% significa que o item deve ocupar 33% do espaço disponível no container.
+6rem é uma medida relativa ao tamanho da fonte no documento (1 rem é igual ao tamanho da fonte do root, geralmente 16px, então 6rem seriam 96px).
+O cálculo 33% - 6rem significa que o item vai ocupar 33% do espaço, mas com uma redução de 6rem (96px) desse valor.*/
+.cartao {
+    margin: 1rem 1rem;
+    height: 20rem;
+    flex-grow: 1;
+    flex-basis: calc(33% - 6rem);
+}
+
+/*bottom: 0;: O rodapé ficará fixado no fundo da página, sem espaço entre ele e a parte inferior da tela.
+
+position: fixed;: O rodapé vai ficar fixo na tela, ou seja, ele não vai se mover quando você rolar a página para cima ou para baixo.
+
+width: 100%;: O rodapé vai ocupar toda a largura da tela, sem margens.
+
+height: 2rem;: A altura do rodapé será 2rem (que, por padrão, é 32px, já que 1rem = 16px).*/
+footer {
+    background-color: black;
+    color: white;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    height: 2rem;
+}
+
+/*height: 100%;: O elemento vai ter 100% de altura em relação ao seu elemento pai. Ou seja, ele vai ocupar toda a altura disponível dentro de seu contêiner.
+
+transform-style: preserve-3d;: Isso permite que o elemento e seus filhos (sub-elementos) possam ser transformados em 3D. Ele mantém o efeito 3D ao manipular a posição ou a rotação dos itens dentro desse elemento.
+
+transition: transform 300ms ease-in-out;: Esse código cria uma animação suave para mudanças na propriedade transform (como rotação, movimento, escala, etc.). A animação vai durar 300 milissegundos e terá um efeito de "ease-in-out", ou seja, vai começar devagar, acelerar no meio e depois desacelerar no final.*/
+.cartao__conteudo {
+    text-align: center;
+    background-color: var(--card-front-color);
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 300ms ease-in-out;
+}
+
+/*alinhamos o texto e demos espaçamento em cima*/
+footer p {
+    text-align: center;
+    font-size: 0.6rem;
+    margin-top: 0.5rem;
+}
+
+.cartao__conteudo h3 { /*estamos editando o h3 especificamente do cartao__conteudo*/
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    text-align: left;
+    padding: 0.5rem;
+    position: absolute;
+    margin: 0.6rem;
+    border-radius: 0.6rem;
+    font-size: 1vw;
+    backface-visibility: hidden; /*estou dizendo para esconder as costas dele. */
+}
+
+.cartao__conteudo p { /*estamos editando o p especificamente do cartao__conteudo*/
+    margin-top: 1rem;
+    padding: 2rem;
+    margin-top: 4rem;
+    font-size: 1.4vw;
+}
+
+/*usamos o hover para quando passar o  mouse, para funcionar esse codigo, fomos na parte do cartao__conteudo e adicionamos. 
+Depois trocamos pelo active para ser usado no js com a função de virar e desvirar o cartão, sem precisar necessariamente do hover.
+antes: .cartao:hover
+*/
+.cartao.active .cartao__conteudo {
+    transform: rotateY(180deg);
+}
+
+/*
+backface-visibility: hidden;: Esconde a parte de trás do elemento quando ele é girado (como em uma animação de virar a carta). Com isso, a "carta" não vai mostrar sua parte de trás quando for rotacionada, mantendo a aparência limpa.
+
+position: absolute;: Posiciona o elemento de forma absoluta em relação ao seu contêiner pai (normalmente um elemento com position: relative). Isso significa que o elemento será posicionado livremente, sem afetar outros elementos ao redor.
+
+height: 100%;: Define a altura do elemento como 100% do tamanho do contêiner pai, ou seja, o elemento vai ocupar toda a altura disponível.
+
+width: 100%;: Define a largura do elemento como 100% do contêiner pai, fazendo com que o elemento ocupe toda a largura disponível.
+
+box-sizing: border-box;: Faz com que o tamanho do elemento (largura e altura) inclua também as bordas e o preenchimento (padding). Ou seja, se o elemento tiver bordas ou preenchimento, o tamanho total do elemento ainda será o mesmo, sem "estourar" o tamanho especificado.*/
+.cartao__conteudo__pergunta, 
+.cartao__conteudo__resposta {
+    backface-visibility: hidden; /*escondi as costas de ambas*/
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box; /*qro q o box size vai ser do tamanho do conteúdo*/
+}
+
+/*isso aqui foi feito para mostrar a resposta quando o cartao virasse.
+la em cima colocamos para que ambos não mostrasse as costas um do outro, aqui coloquei para que só a resposta aparecesse nas costas da pergunta, girasse em 180graus*/
+.cartao__conteudo__resposta {
+    transform: rotateY(180deg);
+    /*esse 0.4 dx mais claro a cor*/
+    background-color: rgb(0, 244, 191, 0.4);
+    border: 4px solid var(--card-back-color);
+}
+
+/*o weifht da paso para a palavra, no caso, deixando ela mais grossa.*/
+.cartao__conteudo__pergunta p {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.cartao__conteudo__resposta p {
+    color: var(--card-back-color);
+    font-weight: 700;
+}
+
+/*aqui mostra dentro de alguma tela que tenha no maximo 560px*/
+@media (max-width: 560px) {
+    body{
+    background: url("bg-mobile.webp");
+}
+.cartao {
+    flex: 1 0 calc(100% - 1rem)
+}
+
+.cartao__conteudo h3 {
+    font-size: 3vw;
+}
+
+.cartao__conteudo p {
+    font-size: 3.8vw;
+}
+}
